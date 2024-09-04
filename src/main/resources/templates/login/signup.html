@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+    <h2>회원가입</h2>
+    <div th:if="${nameError == true}">
+        중복된 name입니다.<br>
+    </div>
+    <form action="/signup" method="post">
+        name<br>
+        <input type="text" name="name" required><br>
+
+        password<br>
+        <input type="password" name="password" required><br>
+
+        boardname<br>
+        <input type="text" name="boardname" required><br>
+
+        <button type="submit">submit</button>
+    </form>
+
+    <a href="/login">취소</a>
+</body>
+</html>

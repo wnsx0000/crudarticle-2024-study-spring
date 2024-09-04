@@ -9,19 +9,18 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Post {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "member_id")
     private Long id;
 
-    private String title;
-    private String content;
+    private String name;
+    private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "articleboard_id")
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private Articleboard articleboard;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     private List<Comment> comments;
 }

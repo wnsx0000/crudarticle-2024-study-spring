@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>member board</title>
+</head>
+<body>
+<header>
+    <h1 th:text="${board.name}"></h1>
+
+    <a href="/logout">로그아웃</a><br><br>
+</header>
+
+포스트 목록.<br>
+
+<div th:if="${canwrite == true}">
+    <a th:href="@{/user/{name}/write(name=${username})}">글쓰기</a>
+</div>
+
+<ol>
+    <li th:each="post : ${board.posts}">
+        <a th:href="@{/user/{name}/{id}(name=${username},id=${post.id})}">
+            <p th:text="${post.title}"></p>
+        </a>
+        <p th:text="|작성자 : ${username}|"></p><br>
+    </li>
+</ol>
+
+</body>
+</html>

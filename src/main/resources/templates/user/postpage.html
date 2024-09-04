@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>post page</title>
+</head>
+<body>
+<header>
+    <h1 th:text="${board.name}"></h1>
+
+    <a href="/logout">로그아웃</a><br><br>
+</header>
+
+글 내용.<br>
+
+<div th:if="${canedit == true}">
+    <a th:href="@{/user/{name}/{id}/delete(name=${username},id=${postid})}">삭제</a><br>
+    <a th:href="@{/user/{name}/{id}/update(name=${username},id=${postid})}">수정</a>
+</div>
+
+<h3 th:text="${post.title}"></h3>
+<p th:text="${post.content}"></p><br>
+
+<a th:href="@{/user/{name}(name=${username})}">목록으로</a>
+
+</body>
+</html>

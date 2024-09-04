@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>write form</title>
+</head>
+<body>
+<header>
+    <h1 th:text="${board.name}"></h1>
+
+    <a href="/logout">로그아웃</a><br>
+</header>
+
+글쓰기.<br>
+
+<form th:action="@{/user/{name}/write(name=${username})}" method="post">
+    제목<br>
+    <input type="text" name="title" required><br>
+
+    내용<br>
+    <textarea name="content" required></textarea><br>
+
+    <button type="submit">submit</button>
+</form>
+
+<a th:href="@{/user/{name}(name=${username})}">취소</a>
+
+</body>
+</html>
