@@ -22,6 +22,6 @@ public class Post {
     @JoinColumn(name = "articleboard_id")
     private Articleboard articleboard;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 }

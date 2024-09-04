@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>write form</title>
+    <title>update form</title>
 </head>
 <body>
 <header>
@@ -13,19 +13,19 @@
     <a href="/user/all">전체 게시판 목록</a><br>
 </header>
 
-글쓰기.<br>
+글 수정.<br>
 
-<form th:action="@{/user/{name}/write(name=${username})}" method="post">
+<form th:action="@{/user/{name}/{id}/update(name=${username},id=${postid})}" method="post">
     제목<br>
-    <input type="text" name="title" required><br>
+    <input th:value="${title}" type="text" name="title" required><br>
 
     내용<br>
-    <textarea name="content" required></textarea><br>
+    <textarea th:text="${content}" name="content" required></textarea><br>
 
     <button type="submit">submit</button>
 </form>
 
-<a th:href="@{/user/{name}(name=${username})}">취소</a>
+<a th:href="@{/user/{name}/{id}(name=${username},id=${postid})}">취소</a>
 
 </body>
 </html>

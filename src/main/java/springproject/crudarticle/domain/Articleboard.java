@@ -21,6 +21,6 @@ public class Articleboard {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "articleboard", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "articleboard", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 }

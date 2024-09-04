@@ -16,4 +16,13 @@ public class WebConfig {
         filterRegistrationBean.addUrlPatterns("/*");
         return filterRegistrationBean;
     }
+
+    @Bean
+    public FilterRegistrationBean<jakarta.servlet.Filter> authorCheckFilter() {
+        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new AuthorCheckFilter());
+        filterRegistrationBean.setOrder(2);
+        filterRegistrationBean.addUrlPatterns("/*");
+        return filterRegistrationBean;
+    }
 }

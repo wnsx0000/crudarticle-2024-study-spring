@@ -18,7 +18,7 @@ public class Member {
     private String name;
     private String password;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private Articleboard articleboard;
 
     @OneToMany(mappedBy = "member")

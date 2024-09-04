@@ -8,12 +8,14 @@
 <header>
     <h1 th:text="${board.name}"></h1>
 
-    <a href="/logout">로그아웃</a><br><br>
+    <p th:text="|현재 로그인 계정 : ${current_member}|"></p>
+    <a href="/logout">로그아웃</a><br>
+    <a href="/user/all">전체 게시판 목록</a><br><br>
 </header>
 
 글 내용.<br>
 
-<div th:if="${canedit == true}">
+<div th:if="${authorized_member == true}">
     <a th:href="@{/user/{name}/{id}/delete(name=${username},id=${postid})}">삭제</a><br>
     <a th:href="@{/user/{name}/{id}/update(name=${username},id=${postid})}">수정</a>
 </div>
@@ -21,7 +23,28 @@
 <h3 th:text="${post.title}"></h3>
 <p th:text="${post.content}"></p><br>
 
-<a th:href="@{/user/{name}(name=${username})}">목록으로</a>
+<a th:href="@{/user/{name}(name=${username})}">목록으로</a><br><br>
+
+댓글 작성.<br>
+
+<form th:action="@{/user/{name}/{id}(name=${username},id=${postid})}" method="post">
+    댓글 제목<br>
+    <input type="text" name="title" required><br>
+
+    댓글 내용<br>
+    <textarea name="content" required></textarea><br>
+
+    <button type="submit">submit</button>
+</form>
+
+<br>댓글 목록.<br>
+
+<ol>
+    <li th:each="comment : ${comments}">
+        <p th:text="|${comment.title} (작성자 : ${comment.getMember().getName()})|"></p>
+        <p th:text="${comment.content}"></p>
+    </li>
+</ol>
 
 </body>
 </html>

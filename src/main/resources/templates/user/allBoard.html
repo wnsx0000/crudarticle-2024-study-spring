@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all board</title>
+</head>
+<body>
+<header>
+    <h1>전체 게시판 목록</h1>
+
+    <p th:text="|현재 로그인 계정 : ${current_member}|"></p>
+    <a href="/logout">로그아웃</a><br><br>
+</header>
+
+<ol>
+    <li th:each="member : ${members}">
+        <a th:href="@{/user/{name}(name=${member.getName()})}">
+            <p th:text="|게시판 이름 : ${member.getArticleboard().getName()}|"></p>
+        </a>
+        <p th:text="|소유자 : ${member.getName()}|"></p><br>
+    </li>
+</ol>
+
+</body>
+</html>

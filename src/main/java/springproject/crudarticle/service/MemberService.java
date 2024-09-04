@@ -71,6 +71,18 @@ public class MemberService {
         post.setArticleboard(articleboard);
     }
 
+    @Transactional
+    public void updatePost(String name, String postId, String title, String content) {
+        List<Post> posts = getArticleboardByName(name).getPosts();
+        for (Post post : posts) {
+            if(Integer.parseInt(postId) == post.getId().intValue()) {
+                post.setTitle(title);
+                post.setContent(content);
+                return;
+            }
+        }
+    }
+
     public Post getPostById(String name, String id) {
         List<Post> posts = getArticleboardByName(name).getPosts();
         for (Post post : posts) {
@@ -84,13 +96,40 @@ public class MemberService {
     @Transactional
     public void deletePostById(String name, String id) {
         List<Post> posts = getArticleboardByName(name).getPosts();
-        posts.removeIf(post -> (post.getId().intValue() == Integer.parseInt(id)));
-        
-        //test
-        System.out.println("delete service->");
-        for (Post post : posts) {
-            System.out.println("post.getId() = " + post.getId());
+        Post deletePost = null;
+        for(Post post : posts) {
+            if((post.getId().intValue()) == (Integer.parseInt(id))) {
+                deletePost = post;
+                break;
+            }
         }
-        getArticleboardByName(name).setName("333");
+        if(deletePost != null) {
+            posts.remove(deletePost);
+            deletePost.setArticleboard(null);
+        }
+    }
+
+    public List<Comment> getCommentList(String name, String id) {
+        Post post = getPostById(name, id);
+        return (post.getComments());
+    }
+
+    @Transactional
+    public void saveComment(String writerName, String boardOwner, String id, String title, String content) {
+        Comment comment = new Comment();
+        comment.setTitle(title);
+        comment.setContent(content);
+
+        Member member = getMemberByName(writerName);
+        member.getComments().add(comment);
+        comment.setMember(member);
+
+        Post post = getPostById(boardOwner, id);
+        post.getComments().add(comment);
+        comment.setPost(post);
+    }
+
+    public List<Member> getAllMember() {
+        return repository.findAll();
     }
 }

@@ -8,12 +8,14 @@
 <header>
     <h1 th:text="${board.name}"></h1>
 
-    <a href="/logout">로그아웃</a><br><br>
+    <p th:text="|현재 로그인 계정 : ${current_member}|"></p>
+    <a href="/logout">로그아웃</a><br>
+    <a href="/user/all">전체 게시판 목록</a><br><br>
 </header>
 
 포스트 목록.<br>
 
-<div th:if="${canwrite == true}">
+<div th:if="${authorized_member == true}">
     <a th:href="@{/user/{name}/write(name=${username})}">글쓰기</a>
 </div>
 
