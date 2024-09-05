@@ -26,13 +26,14 @@ public class AuthorCheckFilter implements Filter {
         }
 
         Member member = (Member)session.getAttribute("member");
-        String url = request.getRequestURI();
+        String uri = request.getRequestURI();
+        uri = deleteJsessionIdFromUri(uri);
 
-        log.debug("AuthorCheckFilter:uri from request={}", url);
-        log.debug("AuthorCheckFilter:username from url={}", getUserNameFromUrl(url));
+        log.debug("AuthorCheckFilter:uri from request={}", uri);
+        log.debug("AuthorCheckFilter:username from url={}", getUserNameFromUrl(uri));
         log.debug("AuthorCheckFilter:username from session={}", member.getName());
 
-        String userNameFromUrl = getUserNameFromUrl(url);
+        String userNameFromUrl = getUserNameFromUrl(uri);
         if(userNameFromUrl == null) {
             filterChain.doFilter(request, response);
             return;
@@ -45,7 +46,7 @@ public class AuthorCheckFilter implements Filter {
         else {
             // 일치하지 않는 경우
             // delete, write, update url에 접근한 경우 다른 곳으로 리다이렉트
-            if(PatternMatchUtils.simpleMatch(accessDeniedUrlName, getMethodFromUrl(url))) {
+            if(PatternMatchUtils.simpleMatch(accessDeniedUrlName, getMethodFromUrl(uri))) {
                 response.sendRedirect("/user" + member.getName());
                 return;
             }
@@ -77,5 +78,14 @@ public class AuthorCheckFilter implements Filter {
         String[] arr = url.split("/");
         int arrSize = arr.length;
         return (arr[arrSize - 1]);
+    }
+
+    private String deleteJsessionIdFromUri(String uri) {
+        if(uri.contains(";jsessionid=")) {
+            String[] arr = uri.split(";jsessionid=");
+            return arr[0];
+        }
+
+        return uri;
     }
 }
